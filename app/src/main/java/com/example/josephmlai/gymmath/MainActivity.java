@@ -1,13 +1,11 @@
 package com.example.josephmlai.gymmath;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import static com.example.josephmlai.gymmath.R.id.lowerWeight;
-import static com.example.josephmlai.gymmath.R.id.textView3;
-import static com.example.josephmlai.gymmath.R.id.upperWeight;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,13 +17,30 @@ public class MainActivity extends AppCompatActivity {
 
     //calculate!
     public void calculate (View view){
-        int lower = lowerWeight;
-        int upper = upperWeight;
-        String out ="";//test2
-        TextView textViewOut = (TextView) findViewById(R.id.textView3);
 
-        upper = upper+lower;
-        out = Double.toString(upper);
-        textViewOut.setText(out);
+        EditText lower = (EditText)findViewById(R.id.lowerWeight);
+        EditText upper = (EditText)findViewById(R.id.upperWeight);
+        TextView out = (TextView) findViewById(R.id.ans);
+
+        int lowerNum = 45;
+        int upperNum = 0;
+        String ans;
+
+        if (lower.getText().toString().trim().length() != 0) {//check if lower field is empty
+            lowerNum = Integer.parseInt(lower.getText().toString());
+        }
+        if(upper.getText().toString().trim().length() != 0){//check if higher field is empty
+            upperNum = Integer.parseInt(upper.getText().toString());
+        }
+
+        if (upperNum < lowerNum){
+            out.setTextColor(Color.RED);
+            ans = "Invalid upper weight.";
+        }else {
+            out.setTextColor(Color.BLACK);
+            int sum = lowerNum + upperNum;
+            ans = Integer.toString(sum);
+        }
+        out.setText(ans);
     }
 }
