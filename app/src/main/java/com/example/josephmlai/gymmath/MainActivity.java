@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public void calculate (View view){
         int lower = lowerWeight;
         int upper = upperWeight;
-        String out ="";
+        String out ="";//test
         TextView textViewOut = (TextView) findViewById(R.id.textView3);
 
         upper = upper+lower;
