@@ -16,10 +16,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //calculate!
-    public void calculate (View view){
+    public void calculate (View view) {
 
-        EditText lower = (EditText)findViewById(R.id.lowerWeight);
-        EditText upper = (EditText)findViewById(R.id.upperWeight);
+        EditText lower = (EditText) findViewById(R.id.lowerWeight);
+        EditText upper = (EditText) findViewById(R.id.upperWeight);
         TextView out = (TextView) findViewById(R.id.ans);
 
         int lowerNum = 45;
@@ -29,18 +29,30 @@ public class MainActivity extends AppCompatActivity {
         if (lower.getText().toString().trim().length() != 0) {//check if lower field is empty
             lowerNum = Integer.parseInt(lower.getText().toString());
         }
-        if(upper.getText().toString().trim().length() != 0){//check if higher field is empty
+        if (upper.getText().toString().trim().length() != 0) {//check if higher field is empty
             upperNum = Integer.parseInt(upper.getText().toString());
         }
 
-        if (upperNum < lowerNum){
+        if (upperNum < lowerNum) {//catches if higher weight is null or is less than lower weight.
             out.setTextColor(Color.RED);
             ans = "Invalid upper weight.";
-        }else {
+        }else if (lowerNum%5 !=0 || upperNum%5 != 0){//checks if weight is achievable with 45's, 35's, 25's, 10's, 5's, 2.5's
+            out.setTextColor(Color.RED);
+            if (lowerNum % 5 != 0 && upperNum % 5 == 0)    ans = "Unachievable lighter weight.";
+            else if (upperNum % 5 != 0 && lowerNum % 5 == 0)    ans = "Unachievable heavier weight.";
+            else    ans = "Both lighter and heavier weights are unachievable.";
+
+    }else{
             out.setTextColor(Color.BLACK);
-            int sum = lowerNum + upperNum;
-            ans = Integer.toString(sum);
+            int difference = ((upperNum - lowerNum)-45)/2;
+            findPlates();
+            ans = Integer.toString(difference);
         }
         out.setText(ans);
+    }
+
+    private String findPlates(){//returns string of plates
+
+        return null;
     }
 }
