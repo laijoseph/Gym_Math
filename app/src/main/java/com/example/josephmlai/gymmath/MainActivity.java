@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText lower = (EditText) findViewById(R.id.lowerWeight);
         EditText upper = (EditText) findViewById(R.id.upperWeight);
+
         TextView fortyFive = (TextView) findViewById(R.id.fortyFive);
         TextView thirtyFive = (TextView) findViewById(R.id.thirtyFive);
         TextView twentyFive = (TextView) findViewById(R.id.twentyFive);
@@ -47,49 +50,61 @@ public class MainActivity extends AppCompatActivity {
             else if (upperNum % 5 != 0 && lowerNum % 5 == 0)    ans = "Unachievable heavier weight.";
             else    ans = "Both lighter and heavier weights are unachievable.";
 
-    }else{
+        }else{
             fortyFive.setTextColor(Color.BLACK);
-            double difference = ((upperNum - lowerNum)-45)/2;
-            double[] initial = initPlates((lowerNum-45)/2);
-            double[] finl = plateDiff(initial, difference);
-            double[] diff = arrDiff(initial, finl);
-            String ans45 = "45's: "+initial[0];
-            String ans35 = "35's: "+initial[1];
-            String ans25 = "25's: "+initial[2];
-            String ans10 = "10's: "+initial[3];
-            String ans5 = "5's: "+initial[4];
-            String ans2half = "2.5's: "+initial[5];
+            double differencePerSide = (upperNum - lowerNum)/2.0;//works
+            int[] initial = new int[6];
+            int[] finl = new int[6];
+            int[] diff = new int[6];
 
-            String diff45 = Double.toString(diff[0]);
-            String diff35 = Double.toString(diff[1]);
-            String diff25 = Double.toString(diff[2]);
-            String diff10 = Double.toString(diff[3]);
-            String diff5 = Double.toString(diff[4]);
-            String diff2half = Double.toString(diff[5]);
+            System.arraycopy(initPlates(lowerNum), 0, initial,0, 6);
+            System.arraycopy(plateDiff(initial, differencePerSide), 0, finl,0, 6);
+            System.arraycopy(arrDiff(initial, finl), 0, diff,0, 6);
 
-            fortyFive.setText(ans45);
-            thirtyFive.setText(ans35);
-            twentyFive.setText(ans25);
-            ten.setText(ans10);
-            five.setText(ans5);
-            twoHalf.setText(ans2half);
+            String init0 = "45's: "+initPlates(lowerNum)[0];
+            String init1 = "35's: "+initial[1];
+            String init2 = "25's: "+initial[2];
+            String init3 = "10's: "+initial[3];
+            String init4 = "5's: "+initial[4];
+            String init5 = "2.5's: "+initPlates(lowerNum)[5]+" Difference per side: "+differencePerSide+"Lower num: "+ lowerNum+ " inital arr length "+initial.length;
+
+            String diff0 = Double.toString(diff[0]);
+            String diff1 = Double.toString(diff[1]);
+            String diff2 = Double.toString(diff[2]);
+            String diff3 = Double.toString(diff[3]);
+            String diff4 = Double.toString(diff[4]);
+            String diff5 = Double.toString(diff[5]);
+
+            fortyFive.setText(init0);
+            thirtyFive.setText(init1);
+            twentyFive.setText(init2);
+            ten.setText(init3);
+            five.setText(init4);
+            twoHalf.setText(init5);
         }
-        //out.setText(ans);
     }
 
-    private double[] initPlates (double z) {//returns string of plates
+    private int[] initPlates (int lower) {//returns arr of plates
 
-        double[] plateCountArr = new double[6];//45, 35, 25, 10, 5, 2.5
-        Double d = new Double(z);
+        int[] plateCountArr = new int[6];//45, 35, 25, 10, 5, 2.5
+        Double x = new Double(lower);
+        x = (x-45)/2;//x now has weight of each side minus bar
 
+        /*if (x%5 != 0){
+            x = x - 2.5;
+            plateCountArr[5]++;
+        }*///clears any 2.5's.
 
-        if (z%5 != 0){z -= 2.5; plateCountArr[5]++;}
-        z = z/5;//multiple of 5
+        x = x/5;//breaking it down into multiplier of 5.
 
-        plateCountArr[0] += z/18;//counts number of 45's needed.
-
-        //plates at 10 or above are stackable/desirable
-        switch (d.intValue()%18) {
+        //THIS WORKS.  TESTED.
+        if (x > 17){
+            plateCountArr[0] = (x.intValue()/9);//counts number of 45's needed, get the 45's out of the way.
+            x = x%18;
+        }
+/*
+        //plates at 10 or above are stackable && preferred
+        switch (x.intValue()) {
             //looks up array for largest plate
             case 17:
                 plateCountArr[1]++;
@@ -151,14 +166,16 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 plateCountArr[4]++;
                 break;
-            case 0:
-                //plateCountArr[]++;
+            case 0://do nothing, already taken care of
                 break;
-        }
+        }*/
+
         return plateCountArr;
     }
-    double[] plateDiff (double[] in, double diff){
-        double[] plateCountArr = in;
+
+
+    int[] plateDiff (int[] in, double diff){
+        int[] plateCountArr = in;
         if(plateCountArr[5]==1){
             plateCountArr[5]=0;
             diff -= 2.5;
@@ -191,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         }return plateCountArr;
     }
 
-    double[] arrDiff(double[] x, double[]y){
+    int[] arrDiff(int[] x, int[]y){
         for (int i = 0; i < x.length; i++){
             y[i] = y[i]-x[i];
         }
