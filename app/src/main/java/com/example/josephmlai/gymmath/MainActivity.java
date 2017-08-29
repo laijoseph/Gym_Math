@@ -51,14 +51,19 @@ public class MainActivity extends AppCompatActivity {
         if (upperNum < lowerNum) {//catches if higher weight is null or is less than lower weight.
             fortyFive.setTextColor(Color.RED);
             fortyFive.setText("Invalid upper weight.");
-        }else if (lowerNum%5 !=0 || upperNum%5 != 0){//checks if weight is achievable with 45's, 35's, 25's, 10's, 5's, 2.5's
+        }else if(lowerNum<45){
+            fortyFive.setTextColor(Color.RED);
+            fortyFive.setText("Lower weight cannot be less than that of the barbell.");
+        }
+        else if (lowerNum%5 !=0 || upperNum%5 != 0){//checks if weight is achievable with 45's, 35's, 25's, 10's, 5's, 2.5's
             fortyFive.setTextColor(Color.RED);
             if (lowerNum % 5 != 0 && upperNum % 5 == 0)    ans = "Unachievable lighter weight.";
             else if (upperNum % 5 != 0 && lowerNum % 5 == 0)    ans = "Unachievable heavier weight.";
             else    ans = "Both lighter and heavier weights are unachievable.";
+            fortyFive.setText(ans);
 
         }else{
-            fortyFive.setTextColor(Color.BLACK);
+            //fortyFive.setTextColor(Color.BLACK);
             double differencePerSide = (upperNum - lowerNum)/2.0;//works
             //int[] initial = new int[6];
             /*int[] finl = new int[6];
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] initPlates (int lower) {//returns arr of plates
 
         int[] plateCountArr = new int[6];//45, 35, 25, 10, 5, 2.5
-        Double x = new Double(lower);
+        Double x = Double.valueOf(lower);
         x = (x-45)/2;//x now has weight of each side minus bar
 
         if (x%5 != 0){
