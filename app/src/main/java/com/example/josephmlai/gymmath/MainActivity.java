@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         EditText lower = (EditText) findViewById(R.id.lowerWeight);
         EditText upper = (EditText) findViewById(R.id.upperWeight);
 
+        TextView initLabel = (TextView) findViewById(R.id.startWithLabel);
+        TextView addSub = (TextView) findViewById(R.id.addSub);
+
         TextView fortyFive = (TextView) findViewById(R.id.fortyFive);
         TextView thirtyFive = (TextView) findViewById(R.id.thirtyFive);
         TextView twentyFive = (TextView) findViewById(R.id.twentyFive);
@@ -57,13 +60,17 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (lowerNum%5 !=0 || upperNum%5 != 0){//checks if weight is achievable with 45's, 35's, 25's, 10's, 5's, 2.5's
             fortyFive.setTextColor(Color.RED);
-            if (lowerNum % 5 != 0 && upperNum % 5 == 0)    ans = "Unachievable lighter weight.";
-            else if (upperNum % 5 != 0 && lowerNum % 5 == 0)    ans = "Unachievable heavier weight.";
-            else    ans = "Both lighter and heavier weights are unachievable.";
+
+            if (lowerNum % 5 != 0 && upperNum % 5 == 0)    ans = "Unachievable lighter weight with increments of 2.5lbs.";
+            else if (upperNum % 5 != 0 && lowerNum % 5 == 0)    ans = "Unachievable heavier weight with increments of 2.5lbs.";
+            else    ans = "Both lighter and heavier weights are unachievable with increments of 2.5lbs.";
             fortyFive.setText(ans);
 
         }else{
-            //fortyFive.setTextColor(Color.BLACK);
+            initLabel.setText("Starting weights");//top labels
+            addSub.setText("Add/Subtract");
+
+            fortyFive.setTextColor(thirtyFive.getCurrentTextColor());
             double differencePerSide = (upperNum - lowerNum)/2.0;//works
             //int[] initial = new int[6];
             /*int[] finl = new int[6];
@@ -71,28 +78,115 @@ public class MainActivity extends AppCompatActivity {
 
             int[] initial = Arrays.copyOf(initPlates(lowerNum),6);
             int[] finl = Arrays.copyOf(plateDiff(initial,differencePerSide),6);
-            int[] diff = Arrays.copyOf(arrDiff(initPlates(lowerNum), finl), 6);
+            int[] diff = Arrays.copyOf(arrDiff(initial, finl), 6);
 
-            String init0 = "45 "+initial[0];
-            String init1 = "35 "+initial[1];
-            String init2 = "25 "+initial[2];
-            String init3 = "10 "+initial[3];
-            String init4 = "5 "+initial[4];
-            String init5 = "2.5 "+initial[5];
 
-            String diff0 = Integer.toString(diff[0]);
-            String diff1 = Integer.toString(diff[1]);
+            String init0 = "45's: "+initial[0];
+            String init1 = "35's: "+initial[1];
+            String init2 = "25's: "+initial[2];
+            String init3 = "10's: "+initial[3];
+            String init4 = "5's: "+initial[4];
+            String init5 = "2.5's "+initial[5];
+
+            if (diff[0] != 0) {
+                String diff0 = "+"+Integer.toString(diff[0]);
+                diffOut0.setTextColor(Color.GREEN);//reset color
+                if(diff[0] < 0){
+                    diffOut0.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut0.setText(diff0);
+            }else {//if it is zero, don't display.
+                diffOut0.setText("");
+            }
+
+            if (diff[1] != 0) {
+                String diff1 = "+"+Integer.toString(diff[1]);
+                diffOut1.setTextColor(Color.GREEN);//reset color
+                if(diff[1] < 0){
+                    diffOut1.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut1.setText(diff1);
+            }else {//if it is zero, don't display.
+                diffOut1.setText("");
+            }
+
+            if (diff[2] != 0) {
+                String diff2 = "+"+Integer.toString(diff[2]);
+                diffOut2.setTextColor(Color.GREEN);//reset color
+                if(diff[2] < 0){
+                    diffOut2.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut2.setText(diff2);
+            }else {//if it is zero, don't display.
+                diffOut2.setText("");
+            }
+
+            if (diff[3] != 0) {
+                String diff3 = "+"+Integer.toString(diff[3]);
+                diffOut3.setTextColor(Color.GREEN);//reset color
+                if(diff[3] < 0){
+                    diffOut3.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut3.setText(diff3);
+            }else {//if it is zero, don't display.
+                diffOut3.setText("");
+            }
+
+            if (diff[4] != 0) {
+                String diff4 = "+"+Integer.toString(diff[4]);
+                diffOut4.setTextColor(Color.GREEN);//reset color
+                if(diff[4] < 0){
+                    diffOut4.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut4.setText(diff4);
+            }else {//if it is zero, don't display.
+                diffOut4.setText("");
+            }
+
+            if (diff[5] != 0) {
+                String diff5 = "+"+Integer.toString(diff[5]);
+                diffOut5.setTextColor(Color.GREEN);//reset color
+                if(diff[5] < 0){
+                    diffOut5.setTextColor(Color.RED);//if negative, set color to red
+                }
+                diffOut5.setText(diff5);
+            }else {//if it is zero, don't display.
+                diffOut5.setText("");
+            }
+
+
+            /*String diff1 = Integer.toString(diff[1]);
+            diffOut1.setText(diff1);
+
             String diff2 = Integer.toString(diff[2]);
-            String diff3 = Integer.toString(diff[3]);
-            String diff4 = Integer.toString(diff[4]);
-            String diff5 = Integer.toString(diff[5]);
+            diffOut2.setText(diff2);
 
-            fortyFive.setText(init0); diffOut0.setText(diff0);
-            thirtyFive.setText(init1); diffOut1.setText(diff1);
-            twentyFive.setText(init2); diffOut2.setText(diff2);
-            ten.setText(init3); diffOut3.setText(diff3);
-            five.setText(init4); diffOut4.setText(diff4);
-            twoHalf.setText(init5); diffOut5.setText(diff5);
+            String diff3 = Integer.toString(diff[3]);
+            diffOut3.setText(diff3);
+
+            String diff4 = Integer.toString(diff[4]);
+            diffOut4.setText(diff4);
+
+            String diff5 = Integer.toString(diff[5]);
+            diffOut5.setText(diff5);*/
+
+            /*
+            String diff0 = Integer.toString(finl[0]);
+            String diff1 = Integer.toString(finl[1]);
+            String diff2 = Integer.toString(finl[2]);
+            String diff3 = Integer.toString(finl[3]);
+            String diff4 = Integer.toString(finl[4]);
+            String diff5 = Integer.toString(finl[5]);
+*/
+
+
+            fortyFive.setText(init0);
+            thirtyFive.setText(init1);
+            twentyFive.setText(init2);
+            ten.setText(init3);
+            five.setText(init4);
+            twoHalf.setText(init5);
+
         }
     }
 
@@ -186,44 +280,49 @@ public class MainActivity extends AppCompatActivity {
     }//how much the lower weight is
 
 
-    int[] plateDiff (int[] in, double diff){
+    int[] plateDiff (int[] in, double diff1) {
         int[] plateCountArr = Arrays.copyOf(in, in.length);
-        if(plateCountArr[5]==1){
-            plateCountArr[5]=0;
-            diff -= 2.5;
+        double diff = diff1;
+        if (plateCountArr[5] > 0) {//take off non-stackable 2.5's
+            diff += 2.5*plateCountArr[5];
+            plateCountArr[5] = 0;
         }
-        double factor = 0;
-        if (diff > 45){
-            factor = diff/45;
+        if (plateCountArr[4] < 0){//take off non-stackable 5's
+            diff += 5*plateCountArr[4];
+            plateCountArr[4]++;
+        }
+        double factor;//how many of which plates need to be added on.
+
+        if (diff >= 45){
+            factor = Math.floor(diff/45);
             plateCountArr[0] += factor;
-            diff = factor%45;
-        }if (diff > 35){
-            factor = diff/35;
+            diff = diff%45;
+        }if (diff >= 35){
+            factor = Math.floor(diff/35);
             plateCountArr[1] += factor;
-            diff = factor%35;
-        }if (diff > 25){
-            factor = diff/25;
+            diff = diff%35;
+        }if (diff >= 25){
+            factor = Math.floor(diff/25);
             plateCountArr[2] += factor;
-            diff = factor%25;
-        }if (diff > 10){
-            factor = diff/10;
+            diff = diff%25;
+        }if (diff >= 10){
+            factor = Math.floor(diff/10);
             plateCountArr[3] += factor;
-            diff = factor%10;
-        }if (diff > 5){
-            factor = diff/5;
+            diff = diff%10;
+        }if (diff >= 5){
+            factor = Math.floor(diff/5);
             plateCountArr[4] += factor;
-            diff = factor%5;
-        }if (diff > 2.5){
-            factor = diff/2.5;
+            diff = diff%5;
+        }if (diff >= 2.5){
+            factor = Math.floor(diff/2.5);
             plateCountArr[5] += factor;
-            diff = factor%2.5;
         }return plateCountArr;
     }//first array, then calculates how much more weight needs to be stacked on
 
     int[] arrDiff(int[] x, int[]y){
         int[] z = Arrays.copyOf(y, y.length);
-        for (int i = 0; i < x.length; i++){
-            y[i] = y[i]-x[i];
+        for (int i = 0; i < z.length; i++){
+            z[i] = z[i]-x[i];
         }
         return z;
     }//returns array with differences between each element at corresponding element set at that index
