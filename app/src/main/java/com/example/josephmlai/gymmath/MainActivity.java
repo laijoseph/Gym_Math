@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else{
             initLabel.setText("Starting weights");//top labels
-            addSub.setText("Add/Subtract");
+            addSub.setText("+/-");
 
             fortyFive.setTextColor(thirtyFive.getCurrentTextColor());
             double differencePerSide = (upperNum - lowerNum)/2.0;//works
