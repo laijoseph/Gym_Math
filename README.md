@@ -1,7 +1,9 @@
 # Gym_Math
 Lifting is hard; figuring out the plates doesn't have to be.
 
-I came up with the idea for this project when I was working out with friends. My friends and I have a sizable gap in the weight of our working sets, and we kept taking off plates to put on different plates in between our sets. I figured that there had to be a better way to decide which plates to use to add up to a desired weight. The bumper plates at our gym are the same size from 10 lbs to 45 lbs(stackable, as I like to call it), while 2.5 and 5 lbs are not. This calculator uses the most number of stackable weights as possible for the lesser working set so that the users won't have to waste energy unloading and loading unnecessary plates.
+I came up with the idea for this project when I was working out with friends. My friends and I have a sizable gap in the weight of our working sets, and we kept taking off plates to put on different plates in between our sets. I figured that there had to be a better way to decide which plates to use to add up to a desired weight.
+
+The bumper plates at our gym are the same size from 10 lbs to 45 lbs(stackable, as I like to call it), while 2.5 and 5 lbs are not. This calculator uses the most number of stackable weights as possible for the lesser working set so that the users won't have to waste energy unloading and loading unnecessary plates.
 
 For example, if the two working weights for two squat buddies are 195 lbs and 265 lbs...
 
